@@ -1,0 +1,176 @@
+{% extends "index.html" %}
+
+
+{% block nav %}
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+
+
+<!--          НАВИГАЦИЯ ПОЛЬЗОВАТЕЛЯ-->
+        {% if current_user.role == 1 %}
+
+        <ul class="nav flex-column">
+
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/user_account">
+              <span data-feather="home"></span>
+              Личный кабинет
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/change_owner">
+              <span data-feather="file"></span>
+              Сменить владельца
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" href="/generate_code">
+              <span data-feather="file"></span>
+              Получить код для транзакции
+            </a>
+          </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/add_selfwork">
+              <span data-feather="file"></span>
+              Провести тех обслуживание самостоятельно
+            </a>
+          </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="/add_other_selfwork">
+              <span data-feather="file"></span>
+              Прочие работы
+            </a>
+          </li>
+
+        </ul>
+
+
+
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Ваши автомобили</span>
+          <a class="link-secondary" href="/add_car" aria-label="Добавить авто">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+
+            {%for car in session.get(current_user.id | string, [])%}
+                <li class="nav-item">
+                    <a class="nav-link" href="/car/{{car['id']}}">
+                      <span data-feather="disc"></span>
+                      {{car['name']}}
+                    </a>
+                </li>
+            {% endfor %}
+
+        {% endif %}
+
+
+
+<!--            НАВИГАЦИЯ КОМПАНИИ-->
+        {% if current_user.role == 2 %}
+
+        <ul class="nav flex-column">
+
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/company_account">
+              <span data-feather="home"></span>
+              Личный кабинет
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/add_work">
+              <span data-feather="file"></span>
+                Тех обсуживание
+            </a>
+          </li>
+
+           <li class="nav-item">
+            <a class="nav-link" href="/add_other_work">
+              <span data-feather="file"></span>
+              Прочие работы
+            </a>
+          </li>
+
+        </ul>
+
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Ваши сотрудники</span>
+          <a class="link-secondary" href="/add_worker" aria-label="Добавить сотрудника">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+
+            {%for worker in workers%}
+                <li class="nav-item">
+                    <a class="nav-link" href="/worker/{{worker.id}}">
+                      <span data-feather="user"></span>
+                      {{worker.name}}
+                    </a>
+                </li>
+            {% endfor %}
+
+        {% endif %}
+
+
+<!--            НАВИГАЦИЯ АДМИНИСТРАТОРА-->
+            {% if current_user.role == 3 %}
+
+        <ul class="nav flex-column">
+
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/moderator_account">
+              <span data-feather="home"></span>
+              Личный кабинет
+            </a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/choose_for_edit_characteristics">
+              <span data-feather="home"></span>
+              Добавить характеристики
+            </a>
+          </li>
+
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="/add_work">-->
+<!--              <span data-feather="file"></span>-->
+<!--              Провести тех. обслуживание-->
+<!--            </a>-->
+<!--          </li>-->
+
+        </ul>
+
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Ваши сотрудники</span>
+          <a class="link-secondary" href="/add_worker" aria-label="Добавить сотрудника">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+
+            {%for worker in workers%}
+                <li class="nav-item">
+                    <a class="nav-link" href="/worker/{{worker.id}}">
+                      <span data-feather="eye"></span>
+                      {{worker.name}}
+                    </a>
+                </li>
+            {% endfor %}
+
+        {% endif %}
+            </ul>
+
+
+        <img src="/static/img/ad/oil2.jpg" style="width: 70%; margin-left: 10px;">
+      </div>
+
+    </nav>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "nav.html" %}
+
+
+{% block main %}
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{title}}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Поделиться</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Экспорт</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            Эта неделя
+          </button>
+        </div>
+      </div>
+
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+
+
+
+
+    <p>
+        {{ form.brand.label('Описание работы') }}<br>
+        {{ form.brand(class="form-control")}}<br>
+        {% for error in form.brand.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+
+
+    <p>
+        {{ form.code.label }}<br>
+        {{ form.code(class="form-control") }}<br>
+        {% for error in form.code.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ form.millage.label }}<br>
+        {{ form.millage(class="form-control") }}<br>
+        {% for error in form.millage.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+
+
+    <p>
+        {{ form.worker.label }}<br>
+        {{ form.worker(class="form-control") }}<br>
+        {% for error in form.worker.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+
+
+
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+
+</form>
+
+
+
+
+
+
+{% endblock %}

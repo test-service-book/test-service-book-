@@ -1,0 +1,70 @@
+{% extends "nav.html" %}
+
+
+{% block main %}
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Добавление автомобиля</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Поделиться</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Экспорт</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            Эта неделя
+          </button>
+        </div>
+      </div>
+
+
+
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+
+        {{ form.mark.label }}<br>
+        {{ form.mark(class="form-control") }}<br>
+        {% for error in form.mark.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+
+        {{ form.model.label }}<br>
+        {{ form.model(class="form-control") }}<br>
+        {% for error in form.model.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+
+
+
+    {{ form.submit(type="submit", class="btn btn-primary") }}
+
+</form> <br>
+<script>
+
+    $( "#mark" ).on( "change", function (){
+        var model = $("#mark" );
+        $.ajax({
+          url: "http://127.0.0.1:8080/api/car_models/" + model.val(),
+          data: {},
+          success: function( result ) {
+
+              var el = $("#model" );
+              el.empty();
+              for (let i = 0; i < result['car_models'].length; i++) {
+                  var id = result['car_models'][i]['id'];
+                  var val = result['car_models'][i]['name'];
+                  el.append('<option value="' + id +'">' + val + '</option>');
+               }
+           }
+        });
+  });
+</script>
+
+
+
+{% endblock %}

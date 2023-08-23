@@ -1,0 +1,134 @@
+{% extends "nav.html" %}
+
+
+{% block main %}
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Информация о ТО автомобиля {{car.car_models.mark.name}} {{car.car_models.name}}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Поделиться</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Экспорт</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            Эта неделя
+          </button>
+        </div>
+      </div>
+
+
+
+    <h3>Техническое обслуживание</h3>
+      <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Тип работы</th>
+            <th scope="col">Марка</th>
+            <th scope="col">Объем</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Пробег</th>
+            <th scope="col">Мастер</th>
+
+          </tr>
+        </thead>
+        <tbody>
+        {% for work in works%}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{work.characteristics.name}}</td>
+            <td>{{work.brand}}</td>
+            <td>{{work.amount}}</td>
+            <td>{{work.date.strftime('%d %B %Y')}}</td>
+            <td>{{work.millage}}</td>
+            
+            {% if work.company.id == 2 %}
+                <td>Самостоятельно</td>
+            {% else%}
+              <td><a href="/company/{{work.company.id}}">{{work.worker.name}} ({{work.company.name}})</a></td>
+            {% endif %} 
+            
+
+          </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+      </div>
+
+<h3>Прочие работы</h3>
+<div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Краткое описание</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Пробег</th>
+            <th scope="col">Мастер</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for work in other_works%}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{work.description}}</td>
+            <td>{{work.date.strftime('%d %B %Y')}}</td>
+            <td>{{work.millage}}</td>
+            {% if work.company.id == 2 %}
+                <td>Самостоятельно</td>
+            {% else%}
+              <td><a href="/company/{{work.company.id}}">{{work.worker.name}} ({{work.company.name}})</a></td>
+            {% endif %}
+
+          </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+      </div>
+
+    {% if not list_features %}
+
+      <h3>Для данного автомобиля пока не настроена система рекомендаций</h3>
+
+    {% elif not has_initial %}
+        <h3>Для просмотра списка рекомендаций необходимо заполнить данные о <a href="/init_characteristics/{{car.id}}">последнем ТО</a></h3>
+
+    {% else %}
+
+      <h3>График замен</h3>
+      <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Тип работы</th>
+            <th scope="col">Рекомендуемый пробег</th>
+            <th scope="col">Менять через</th>
+            <th scope="col">Менять каждые</th>
+          </tr>
+        </thead>
+          <tbody>
+          {% for feature in list_features%}
+            <tr>
+              <th scope="row">{{loop.index}}</th>
+              <td>{{feature[0]}}</td>
+              <td>{{feature[1]}}</td>
+              <td>{{feature[2]}}</td>
+              <td>{{feature[3]}}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+
+    {% endif %}
+
+      </div>
+
+
+
+
+{% endblock %}

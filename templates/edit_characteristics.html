@@ -1,0 +1,66 @@
+{% extends "nav.html" %}
+
+
+{% block main %}
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Личный кабинет</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Поделиться</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Экспорт</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            Эта неделя
+          </button>
+        </div>
+      </div>
+
+
+    <a href="/choose_for_edit_characteristics">Назад к выбору авто</a>
+     <h2>Добавить характеристики к {{car.mark.name}} {{ car.name }}</h2>
+
+
+
+   <form method="post">
+
+
+       <div class="row">
+
+                <div class="col">
+                        <b>Наименование</b>
+                </div>
+                {% for name in titles.values() %}
+
+                    <div class="col">
+                        <b>{{name}}</b>
+                    </div>
+
+                {% endfor %}
+            </div><hr>
+
+
+       {%for f in features%}
+            <div class="row">
+                <div class="col">
+                        {{f.name}}
+                </div>
+                
+                {% for name in titles.keys()%}
+                    <div class="col">
+                        <input type="text" class="form-control" value="{{ list_features.get(f.id, '')[name] }}" name="{{name}}-{{f.id}}">
+                    </div>
+                {% endfor %}
+            </div>
+       {% endfor %}
+
+       <input class="btn btn-primary" type="submit" value="Отправить">
+</form>
+
+
+
+
+
+
+{% endblock %}

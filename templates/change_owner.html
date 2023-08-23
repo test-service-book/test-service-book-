@@ -1,0 +1,63 @@
+{% extends "nav.html" %}
+
+
+{% block main %}
+
+{{message}}
+
+{%if form.message[0] == 1%}
+    <div class="alert alert-primary" role="alert">
+      {{form.message[1]}}
+    </div>
+{% elif form.message == 2 %}
+    <div class="alert alert-danger" role="alert">
+      {{form.message[1]}}
+    </div>
+{% endif %}
+
+
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Изменение владельца</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Поделиться</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Экспорт</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            Эта неделя
+          </button>
+        </div>
+      </div>
+
+
+
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+
+
+        {{ form.car.label }}<br>
+        {{ form.car(class="form-control") }}<br>
+        {% for error in form.car.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+
+        {{ form.user.label }}<br>
+        {{ form.user(class="form-control") }}<br>
+        {% for error in form.user.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+
+    {{ form.submit(type="submit", class="btn btn-primary") }}
+
+
+</form> <br>
+
+
+{% endblock %}
